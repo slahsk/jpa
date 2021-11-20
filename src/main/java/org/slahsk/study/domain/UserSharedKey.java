@@ -1,12 +1,10 @@
 package org.slahsk.study.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
@@ -14,9 +12,9 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class UserSharedKey implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private Long id;
 
@@ -25,6 +23,7 @@ public class User {
     @CreatedDate
     private LocalDateTime createdDate;
 
-    @OneToOne
-    private Addres addres;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    @PrimaryKeyJoinColumn
+    private AddresSharedKey addresSharedKey;
 }
