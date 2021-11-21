@@ -1,8 +1,14 @@
 package org.slahsk.study;
 
+import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
+import org.hibernate.boot.model.naming.PhysicalNamingStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -18,6 +24,7 @@ import java.sql.CallableStatement;
 
 @SpringBootApplication
 @EnableJpaRepositories
+@EnableJpaAuditing
 @EnableTransactionManagement
 public class DemoApplication {
 
@@ -32,28 +39,6 @@ public class DemoApplication {
 		return builder.setType(EmbeddedDatabaseType.H2).build();
 	}
 
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-
-		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		vendorAdapter.setDatabase(Database.H2);
-		vendorAdapter.setGenerateDdl(true);
-
-		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-		factory.setJpaVendorAdapter(vendorAdapter);
-		factory.setPackagesToScan(getClass().getPackage().getName());
-		factory.setDataSource(dataSource());
-
-		return factory;
-	}
-
-	@Bean
-	public PlatformTransactionManager transactionManager() {
-
-		JpaTransactionManager txManager = new JpaTransactionManager();
-		txManager.setEntityManagerFactory(entityManagerFactory().getObject());
-		return txManager;
-	}
 
 
 }

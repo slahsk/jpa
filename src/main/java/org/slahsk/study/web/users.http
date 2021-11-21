@@ -1,0 +1,25 @@
+###
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+ "name": "홍길동",
+  "addres": {
+   "address": "서울",
+    "message": "빨리"
+  },
+  "profiles": [
+    {
+      "id": {
+       "departmentId": "100"
+      },
+     "message": "좋음"
+    },
+    {
+      "id": {
+        "departmentId": "200"
+      },
+      "message": "보통"
+    }
+  ]
+}

@@ -7,12 +7,12 @@ import java.io.Serializable;
 
 @Data
 @Entity
+@Table(name = "TB_ADDRES")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddresSharedKey implements Serializable {
+public class Addres implements Serializable {
     @Id
-    @Column(name = "user_id")
     private Long id;
 
     private String address;
@@ -20,7 +20,7 @@ public class AddresSharedKey implements Serializable {
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "user_id")
     @ToString.Exclude
-    private UserSharedKey user;
+    @JoinColumn(name = "user_id")
+    private User user;
 }
